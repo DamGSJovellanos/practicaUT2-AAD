@@ -1,0 +1,1 @@
+Conectarse a la base de datos juego, en .env informacion de turso 
