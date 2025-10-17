@@ -1,10 +1,12 @@
 1. Idea de práctica
-    Como tfg tenemos Vincent y yo vamos a hacer un videojuego tipo rouguelite el cual 
+    Como tfg tenemos Vincen y yo vamos a hacer un videojuego tipo rouguelite el cual 
     tiene mucho que ver con la programación (el propio ataque se construye con comandos)
     La idea es hacer una base de datos tipo wiki para nuestro juego, con objetos, ubicaciones,
     personajes...
 2. Organización de BD
     base de datos juego
+        ubicaciones
         
+
 
 3. Organización programa
