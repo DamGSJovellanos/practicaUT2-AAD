@@ -1,0 +1,39 @@
+1. Idea de práctica
+   Como tfg tenemos Vincen y yo vamos a hacer un videojuego tipo rouguelite el cual 
+   tiene mucho que ver con la programación (el propio ataque se construye con comandos)
+   La idea es hacer una base de datos tipo wiki para nuestro juego, con objetos, ubicaciones,
+   personajes...
+2. Organización de BD
+   Tabla: ubicaciones
+      id_ubicacion INT, PRIMARY KEY, NOT NULL
+      nombre VARCHAR(100), NOT NULL
+      descripcion TEXT, NULL
+   Tabla: personajes
+      id_personaje INT, PRIMARY KEY, NOT NULL
+      nombre VARCHAR(100), NOT NULL
+      descripcion TEXT, NULL
+      id_ubicacion INT, FOREIGN KEY → ubicaciones(id_ubicacion), NULL (puede no estar en ningún sitio aún)
+      da_objeto BOOLEAN, NOT NULL, por defecto FALSE
+
+   Tabla: enemigos
+      id_enemigo INT, PRIMARY KEY, NOT NULL
+      nombre VARCHAR(100), NOT NULL
+      descripcion TEXT, NULL
+      id_ubicacion INT, FOREIGN KEY → ubicaciones(id_ubicacion), NOT NULL
+      drop_objetos BOOLEAN, NOT NULL, por defecto FALSE
+
+   Tabla: objetos
+      id_objeto INT, PRIMARY KEY, NOT NULL
+      nombre VARCHAR(100), NOT NULL
+      descripcion TEXT, NULL
+      id_ubicacion INT, FOREIGN KEY → ubicaciones(id_ubicacion), 
+      NULL (puede encontrarse en enemigos o personajes)
+      id_personaje_dropea INT, FOREIGN KEY → personajes(id_personaje), NULL
+      id_enemigo_dropea INT, FOREIGN KEY → enemigos(id_enemigo), NULL
+
+   Tabla intermedia: personaje_objeto (si un personaje puede dar o llevar varios objetos)
+      id_personaje INT, FOREIGN KEY → personajes(id_personaje), NOT NULL
+      id_objeto INT, FOREIGN KEY → objetos(id_objeto), NOT NULL
+
+
+3. Organización programa
