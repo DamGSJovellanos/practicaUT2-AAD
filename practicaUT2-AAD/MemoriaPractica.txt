@@ -4,36 +4,50 @@
    La idea es hacer una base de datos tipo wiki para nuestro juego, con objetos, ubicaciones,
    personajes...
 2. Organización de BD
-   Tabla: ubicaciones
-      id_ubicacion INT, PRIMARY KEY, NOT NULL
-      nombre VARCHAR(100), NOT NULL
-      descripcion TEXT, NULL
-   Tabla: personajes
-      id_personaje INT, PRIMARY KEY, NOT NULL
-      nombre VARCHAR(100), NOT NULL
-      descripcion TEXT, NULL
-      id_ubicacion INT, FOREIGN KEY → ubicaciones(id_ubicacion), NULL (puede no estar en ningún sitio aún)
-      da_objeto BOOLEAN, NOT NULL, por defecto FALSE
+   ubicaciones
+      id_ubicacion INTEGER PRIMARY KEY
+      nombre TEXT NOT NULL
+      descripcion TEXT
+      tipo TEXT NULL -- (ej. ciudad, mazmorra, mundo)
 
-   Tabla: enemigos
-      id_enemigo INT, PRIMARY KEY, NOT NULL
-      nombre VARCHAR(100), NOT NULL
-      descripcion TEXT, NULL
-      id_ubicacion INT, FOREIGN KEY → ubicaciones(id_ubicacion), NOT NULL
-      drop_objetos BOOLEAN, NOT NULL, por defecto FALSE
+   personajes
+      id_personaje INTEGER PRIMARY KEY
+      nombre TEXT NOT NULL
+      descripcion TEXT
+      id_ubicacion INTEGER REFERENCES ubicaciones(id_ubicacion) NULL
+      da_objeto BOOLEAN NOT NULL DEFAULT 0 (false)
+      rol TEXT NULL -- (NPC, amigable, mercader, etc.)
 
-   Tabla: objetos
-      id_objeto INT, PRIMARY KEY, NOT NULL
-      nombre VARCHAR(100), NOT NULL
-      descripcion TEXT, NULL
-      id_ubicacion INT, FOREIGN KEY → ubicaciones(id_ubicacion), 
-      NULL (puede encontrarse en enemigos o personajes)
-      id_personaje_dropea INT, FOREIGN KEY → personajes(id_personaje), NULL
-      id_enemigo_dropea INT, FOREIGN KEY → enemigos(id_enemigo), NULL
+   enemigos
+      id_enemigo INTEGER PRIMARY KEY
+      nombre TEXT NOT NULL
+      descripcion TEXT
+      nivel INTEGER DEFAULT 1
+      id_ubicacion INTEGER REFERENCES ubicaciones(id_ubicacion) NOT NULL
+      drop_objetos BOOLEAN NOT NULL DEFAULT 0
 
-   Tabla intermedia: personaje_objeto (si un personaje puede dar o llevar varios objetos)
-      id_personaje INT, FOREIGN KEY → personajes(id_personaje), NOT NULL
-      id_objeto INT, FOREIGN KEY → objetos(id_objeto), NOT NULL
+   objetos
+      id_objeto INTEGER PRIMARY KEY
+      nombre TEXT NOT NULL
+      descripcion TEXT
+      rareza TEXT DEFAULT 'comun' -- (comun, raro, épico...)
+      id_ubicacion INTEGER REFERENCES ubicaciones(id_ubicacion) NULL
+      id_personaje_dropea INTEGER REFERENCES personajes(id_personaje) NULL
+      id_enemigo_dropea INTEGER REFERENCES enemigos(id_enemigo) NULL
+
+   personaje_objeto 
+      id_personaje INTEGER REFERENCES personajes(id_personaje) NOT NULL
+      id_objeto INTEGER REFERENCES objetos(id_objeto) NOT NULL
+      cantidad INTEGER DEFAULT 1
+      PRIMARY KEY (id_personaje, id_objeto)
+
+
+   enemigo_objeto (opcional: relación muchos-a-muchos para dropeos múltiples)
+      id_enemigo INTEGER REFERENCES enemigos(id_enemigo) NOT NULL
+      id_objeto INTEGER REFERENCES objetos(id_objeto) NOT NULL
+      probabilidad FLOAT DEFAULT 1.0 -- probabilidad de drop
+      PRIMARY KEY (id_enemigo, id_objeto)
+
 
 
 3. Organización programa
