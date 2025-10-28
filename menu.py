@@ -11,7 +11,7 @@ from insercion_inicial import ingesta_inicial
 from bd_conn import cerrar_conexion
 
 def menu():
-    #ingesta_inicial()
+    ingesta_inicial()
     
     
     opcion = ""
