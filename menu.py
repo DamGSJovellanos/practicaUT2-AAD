@@ -5,12 +5,13 @@ from crud_personajes import crear_personaje, obtener_personajes, actualizar_pers
 from crud_ubicaciones import crear_ubicacion, obtener_ubicaciones, actualizar_ubicacion, eliminar_ubicacion
 # Importamos las consultas "dificiles"
 from consultas_complejas_1 import objetos_por_rareza, enemigos_por_nivel, objetos_dropeados_por_enemigo
+from consultas_complejas_2 import contar_objetos_por_personaje, contar_personajes_por_ubicacion, personajes_que_dan_objetos, ubicaciones_con_mas_personajes
 # El primero es para la ingesta inicial de datos y el segundo para cerrar la conexion
 from insercion_inicial import ingesta_inicial
 from bd_conn import cerrar_conexion
 
 def menu():
-    ingesta_inicial()
+    #ingesta_inicial()
     
     
     opcion = ""
