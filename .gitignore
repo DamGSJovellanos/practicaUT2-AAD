@@ -1,2 +1,5 @@
 practicaAAD/
-practicaUT2-AAD/.env
+.env
+.aad 
+aad
+__pycache__
