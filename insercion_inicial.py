@@ -134,6 +134,32 @@ def insertar_objetos():
         VALUES (?, ?, ?, ?, ?, ?)
         """
         ejecutar_query(query, [nombre, descripcion, rareza, id_ubicacion, id_personaje_dropea, id_enemigo_dropea])
+        
+def insertar_personaje_objeto():
+
+    relaciones = [
+        (1, 3, 5),  # Aria (id=1) da Pocion de Vida (id=3), cantidad 5
+        (3, 2, 1)   # Ciri (id=3) da Amuleto Raro (id=2), cantidad 1
+    ]
+    for id_personaje, id_objeto, cantidad in relaciones:
+        query = """
+        INSERT INTO personaje_objeto (id_personaje, id_objeto, cantidad)
+        VALUES (?, ?, ?)
+        """
+        ejecutar_query(query, (id_personaje, id_objeto, cantidad))
+
+def insertar_enemigo_objeto():
+
+    relaciones = [
+        (1, 1, 0.7),  # Goblin (id=1) dropea Espada de Madera (id=1), 70% probabilidad
+        (2, 2, 0.3)   # Troll (id=2) dropea Amuleto Raro (id=2), 30% probabilidad
+    ]
+    for id_enemigo, id_objeto, probabilidad in relaciones:
+        query = """
+        INSERT INTO enemigo_objeto (id_enemigo, id_objeto, probabilidad)
+        VALUES (?, ?, ?)
+        """
+        ejecutar_query(query, (id_enemigo, id_objeto, probabilidad))
 
 # La funcion principal
 def ingesta_inicial():
@@ -143,6 +169,8 @@ def ingesta_inicial():
     insertar_personajes()
     insertar_enemigos()
     insertar_objetos()
+    insertar_personaje_objeto()
+    insertar_enemigo_objeto()
     print("Ingesta inicial completada correctamente.")
     
 
